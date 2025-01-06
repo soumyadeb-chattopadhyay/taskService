@@ -1,12 +1,19 @@
 package com.example.taskService;
 import java.util.UUID;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Future;
 
-public class Main {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component
+public class Main {
+	
+  @Autowired
+  @Qualifier("threadPoolTaskSubmission")
+  private Executor executorService;	
   /**
    * Enumeration of task types.
    */
@@ -61,5 +68,6 @@ public class Main {
       }
     }
   }
+  
 
 }
