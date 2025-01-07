@@ -12,7 +12,7 @@ import com.example.taskService.Main.Task;
 
 @Component
 public class TaskSubmission implements Main.TaskExecutor {
-	
+
 	
 	private static ThreadPoolTaskExecutor executorTaskService = getAsyncTaskExecutor() ;
 
@@ -31,6 +31,7 @@ public class TaskSubmission implements Main.TaskExecutor {
 		});
 		
 	}
+
 
 	public static ThreadPoolTaskExecutor getAsyncTaskExecutor() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
