@@ -36,7 +36,7 @@ public class TaskServiceApplication {
 			String callableReturnString = "Task executed "+i+" ";
 			Main.Task<String> taskInstance = new Main.Task<String>(UUID.randomUUID(),taskGoup, generateTaskType(), () -> {
 			    TimeUnit.MILLISECONDS.sleep(CALLABLE_EXECUTION_DURATION_MS);
-			    return callableReturnString;
+			    return callableReturnString.concat("task groudId "+taskGoup.groupUUID());
 			}) ;
 			taskList.add(taskInstance);
 			i++;
