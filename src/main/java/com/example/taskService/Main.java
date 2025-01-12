@@ -11,9 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Main {
 	
-  @Autowired
-  @Qualifier("threadPoolTaskSubmission")
-  private Executor executorService;	
+
   /**
    * Enumeration of task types.
    */
