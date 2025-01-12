@@ -3,6 +3,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
@@ -29,15 +30,16 @@ public class TaskSubmission implements Main.TaskExecutor {
 		});
 		});
 		
+		
 	}
 
 
 	public static ThreadPoolTaskExecutor getAsyncTaskExecutorForSubmission() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-		executor.setCorePoolSize(15);
-		executor.setMaxPoolSize(40);
+		executor.setCorePoolSize(2);
+		executor.setMaxPoolSize(2);
 		executor.setQueueCapacity(100);
-		executor.setAwaitTerminationSeconds(60);
+		executor.setAwaitTerminationSeconds(600);
 		executor.setWaitForTasksToCompleteOnShutdown(true);
 		executor.setThreadNamePrefix("taskService-taskSubmission");
 		executor.initialize();
@@ -46,10 +48,10 @@ public class TaskSubmission implements Main.TaskExecutor {
 	
 	public static ThreadPoolTaskExecutor getAsyncTaskExecutorForExecution() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-		executor.setCorePoolSize(15);
-		executor.setMaxPoolSize(40);
+		executor.setCorePoolSize(2);
+		executor.setMaxPoolSize(2);
 		executor.setQueueCapacity(100);
-		executor.setAwaitTerminationSeconds(60);
+		executor.setAwaitTerminationSeconds(600);
 		executor.setWaitForTasksToCompleteOnShutdown(true);
 		executor.setThreadNamePrefix("taskService-taskExecutor");
 		executor.initialize();
@@ -62,6 +64,12 @@ public class TaskSubmission implements Main.TaskExecutor {
 	@Override
 	public <T> Future<T> submitTask(Task<T> task) {
 		return executorTaskServiceExecution.submit(task.taskAction());
+	}
+
+
+	public void gracefulShutdown() {
+		executorTaskServiceSubmission.shutdown();
+		executorTaskServiceExecution.shutdown();
 	}
 
 }

@@ -22,7 +22,7 @@ public class TaskServiceApplication {
 	TaskSubmission taskSubmission;
 	
 	private static Integer TASK_LIST_CAPACITY = 10;
-	private static Integer CALLABLE_EXECUTION_DURATION_MS = 300;
+	private static Integer CALLABLE_EXECUTION_DURATION_MS = 1000;
 
 	public static void main(String[] args) {
 		SpringApplication.run(TaskServiceApplication.class, args);
@@ -44,6 +44,7 @@ public class TaskServiceApplication {
 
 		TaskSubmission taskSubmissionInstance = new TaskSubmission();
 		taskSubmissionInstance.submitTasks(taskList);
+		taskSubmissionInstance.gracefulShutdown();
 		
 	}
 	
